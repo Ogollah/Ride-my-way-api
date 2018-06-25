@@ -50,7 +50,7 @@ class AuthTestCase(unittest.TestCase):
         response = self.client().post('/api/v1/auth/signup', data=self.user_data_2)
         self.assertEqual(response.status_code, 201)
         second_response = self.client().post('/api/v1/auth/signup', data=self.user_data_2)
-        self.assertEqual(second_response.status_code, 202)
+        self.assertEqual(second_response.status_code, 409)
         # return result in json format
         result = json.loads(second_response.data.decode())
         self.assertEqual(
@@ -59,7 +59,7 @@ class AuthTestCase(unittest.TestCase):
     def test_valid_email(self):
         """Test for validity of email address used."""
         response = self.client().post('/api/v1/auth/signup', data=self.user_data_3)
-        self.assertEqual(response.status_code, 202)
+        self.assertEqual(response.status_code, 400)
         # return result in json format
         result = json.loads(response.data.decode())
         self.assertEqual(
@@ -68,7 +68,7 @@ class AuthTestCase(unittest.TestCase):
     def test_password_length(self):
         """Test user password should not be less than 4."""
         response = self.client().post('/api/v1/auth/signup', data=self.user_data_4)
-        self.assertEqual(response.status_code, 202)
+        self.assertEqual(response.status_code, 400)
         # return result in json format
         result = json.loads(response.data.decode())
         self.assertEqual(
