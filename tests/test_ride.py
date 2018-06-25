@@ -1,3 +1,4 @@
+#tests/test_ride.py
 """
 This file holds ride offer tests.
 """
@@ -171,7 +172,8 @@ class RideTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(result['message'], 'Ride offer successfully deleted!')
         #test to see if its still available
-        response = self.client().get('/api/v1/ride/1')
+        response = self.client().get(
+            '/api/v1/ride/1', headers=dict(Authorization='Bearer ' + access_token))
         #assert that the status code is 404
         self.assertEqual(response.status_code, 404)
 
@@ -192,7 +194,6 @@ class RideTestCase(unittest.TestCase):
             '/api/v1/ride/2', headers=dict(Authorization='Bearer ' + access_token))
         #return message in json format
         result = json.loads(response.data.decode())
-        #assert that the request contains a success message and a 200 status code
         self.assertEqual(response.status_code, 204)
         self.assertEqual(result['message'], 'Not available')
 
