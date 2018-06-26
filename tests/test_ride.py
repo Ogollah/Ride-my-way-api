@@ -264,7 +264,7 @@ class RideTestCase(unittest.TestCase):
         #return message in json format
         result = json.loads(response.data.decode())
         #get a status code 204 and a success message
-        self.assertEqual(response.status_code, 204)
+        self.assertEqual(response.status_code, 404)
         self.assertEqual(result['message'],
                          "Ride offer you are looking for is not availbale")
 
