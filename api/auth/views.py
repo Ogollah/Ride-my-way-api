@@ -76,13 +76,36 @@ class GetRideView(MethodView):
         response = {"Available Rides": ride_offer}
         return make_response(jsonify(response)), 200
 
+class GetSingleRideView(MethodView):
+    """
+        Get a single ride offer using ride_id class view.
+    """
+
+    def get(self, ride_id):
+        """
+            Get a ride offer by id method.
+        """
+        #Check if ride_offer exists
+        ride_offer = Ride.get_ride_by_id(ride_id)
+        if ride_offer:
+            response = {"Ride": ride_offer.ride_name,
+                        "Driver": ride_offer.driver, "Reg no": ride_offer.reg_num, "From": ride_offer.start,
+                        "Destination": ride_offer.stop, "Passengers": ride_offer.passengers, "Time": ride_offer.time,
+                        "Date": ride_offer.date, "Cost": ride_offer.cost}
+            return make_response(jsonify(response)), 200
+        else:
+            response = {"message": "Your ride offer was not found!"}
+            return make_response(jsonify(response)), 404
+
 # Define the API resource
 #Ride offer
 ride_offer_view = CreateRideView.as_view('ride_offer_view')
 get_ride_offers_view = GetRideView.as_view('get_ride_offers_view')
+get_ride_offer_view = GetSingleRideView.as_view('get_ride_offer_view')
 
 auth_blueprint.add_url_rule(
     '/api/v1/ride/create', view_func=ride_offer_view, methods=['POST'])
-
 auth_blueprint.add_url_rule(
     '/api/v1/ride/rides', view_func=get_ride_offers_view, methods=['GET'])
+auth_blueprint.add_url_rule(
+    '/api/v1/ride/<ride_id>', view_func=get_ride_offer_view, methods=['GET'])
