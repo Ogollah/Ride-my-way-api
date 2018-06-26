@@ -75,7 +75,7 @@ class RideTestCase(unittest.TestCase):
         }
 
         self.ride_data_update = {
-            "start": "Kisauni",
+            "new_start": "Kisauni",
             "new_stop": "Bamburi",
             "new_time": "10:00AM",
             "new_date": "21/6/2018"
