@@ -6,7 +6,7 @@ import re
 from flask.views import MethodView
 from flask import make_response, request, jsonify
 from flask_jwt_extended import jwt_required, get_raw_jwt, create_access_token
-from api.models import Ride
+from api.models import Ride, Request
 
 blacklist = set()
 
@@ -15,7 +15,7 @@ class CreateRideView(MethodView):
     """
         Create a new ride offer.
     """
-
+    @jwt_required
     def post(self):
         """Method to create a new ride"""
         #Check if ride offer already exists
@@ -65,7 +65,7 @@ class GetRideView(MethodView):
     """
         Get created ride offer.
     """
-
+    @jwt_required
     def get(self):
         ride_offer_list = Ride.get_rides(self)
         #create a list of ride offers
@@ -80,7 +80,7 @@ class GetSingleRideView(MethodView):
     """
         Get a single ride offer using ride_id class view.
     """
-
+    @jwt_required
     def get(self, ride_id):
         """
             Get a ride offer by id method.
@@ -96,7 +96,7 @@ class GetSingleRideView(MethodView):
         else:
             response = {"message": "Your ride offer was not found!"}
             return make_response(jsonify(response)), 404
-
+    @jwt_required
     def delete(self, ride_id):
         """
             Delete a ride by using its id
@@ -110,7 +110,7 @@ class GetSingleRideView(MethodView):
         else:
             response = {"message": "Not available"}
             return make_response(jsonify(response)), 404
-
+    @jwt_required
     def put(self, ride_id):
         add_data = request.data
         new_start = add_data['start']
@@ -128,11 +128,36 @@ class GetSingleRideView(MethodView):
             response = {"message": "Ride offer you are looking for is not availbale"}
             return make_response(jsonify(response)), 404
 
+class PostRequestView(MethodView):
+    """
+        Make a request view class.
+    """
+    
+    @jwt_required
+    def post(self, ride_id):
+        ride_offer = Ride.get_ride_by_id(ride_id)
+        if ride_offer:
+            request = {"Ride": ride_offer.ride_name,
+                        "Driver": ride_offer.driver, "Reg no": ride_offer.reg_num, "From": ride_offer.start,
+                        "Destination": ride_offer.stop, "Passengers": ride_offer.passengers, "Time": ride_offer.time,
+                        "Date": ride_offer.date, "Cost": ride_offer.cost}
+            add_request = Request()
+            add_request.request = request
+            add_request.save_request()
+            response = {
+                "message": "Your ride request has been received successfully!"}
+            return make_response(jsonify(response)), 200
+        else:
+            response = {
+                "message": "The ride you are looking for is not available!"}
+            return make_response(jsonify(response)), 404
+
 # Define the API resource
 #Ride offer
 ride_offer_view = CreateRideView.as_view('ride_offer_view')
 get_ride_offers_view = GetRideView.as_view('get_ride_offers_view')
 get_ride_offer_view = GetSingleRideView.as_view('get_ride_offer_view')
+post_request_view = PostRequestView.as_view('post_request_view')
 
 auth_blueprint.add_url_rule(
     '/api/v1/ride/create', view_func=ride_offer_view, methods=['POST'])
@@ -140,3 +165,5 @@ auth_blueprint.add_url_rule(
     '/api/v1/ride/rides', view_func=get_ride_offers_view, methods=['GET'])
 auth_blueprint.add_url_rule(
     '/api/v1/ride/<ride_id>', view_func=get_ride_offer_view, methods=['GET', 'DELETE', 'PUT'])
+auth_blueprint.add_url_rule(
+    '/api/v1/ride/<ride_id>/request', view_func=post_request_view, methods=['POST'])

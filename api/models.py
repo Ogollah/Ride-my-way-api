@@ -4,6 +4,7 @@
 
 #holds a list of ride offers
 RIDES = []
+REQUESTS = []
 
 class Ride(object):
     """
@@ -61,3 +62,24 @@ class Ride(object):
     def delete_ride(self):
         """Delete a ride method."""
         RIDES.remove(self)
+
+class Request(object):
+    """
+        Ride class model.
+    """
+    class_counter = 1
+
+    def __init__(self):
+        """
+            initializes request details.
+        """
+        self.request=None
+        self.ride_id = Ride.class_counter
+        Ride.class_counter += 1
+
+    def save_request(self):
+        """Save a request in the list of requests."""
+        REQUESTS.append(self)
+
+
+            
