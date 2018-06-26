@@ -44,3 +44,9 @@ class User(object):
     def save_user(self):
         """Save a user in USERS."""
         USERS.append(self)
+
+    def reset_password(self, new_password):
+        """
+        Update/reset the user password.
+        """
+        self.password = new_password

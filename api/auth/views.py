@@ -84,12 +84,32 @@ class LogoutView(MethodView):
         response = {"message": "You have successfully logged out"}
         return make_response(jsonify(response)), 200
 
+class ResetPasswordView(MethodView):
+    """Reset password Resource class"""
+    @jwt_required
+    def post(self):
+        """
+            Reset password of a user
+        """
+        current_user = User.get_user_by_email(user_email=request.data['user_email'])
+        new_password = request.data['new_password']
+        if current_user and current_user.check_password_hash(request.data['old_password']):
+            current_user.reset_password(new_password)
+            current_user.set_password_hash(new_password)
+            response = {
+                'message': 'You have successfully reset your password.'}
+            return make_response(jsonify(response)), 200
+        else:
+            response = {'message': 'Wrong password or username'}
+            return make_response(jsonify(response)), 401
+
 
 # Define the API resource
 #user
 signup_view = SignupView.as_view('signup_view')
 login_view = LoginView.as_view('login_view')
 logout_view = LogoutView.as_view('logout_view')
+reset_password_view = ResetPasswordView.as_view('reset_password_view')
 
 
 #User
@@ -109,4 +129,10 @@ auth_blueprint.add_url_rule(
 auth_blueprint.add_url_rule(
     '/api/v1/auth/logout',
     view_func=logout_view,
+    methods=['POST'])
+
+# Define the rule for the reset_password url --->  /api/v1/auth/reset_password
+auth_blueprint.add_url_rule(
+    '/api/v1/auth/reset-password',
+    view_func=reset_password_view,
     methods=['POST'])
