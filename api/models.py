@@ -125,8 +125,3 @@ class Request(object):
         """Save a request in the list of requests."""
         REQUESTS.append(self)
 
-
-            
-
-
-

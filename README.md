@@ -1,5 +1,22 @@
+[![Build Status](https://travis-ci.org/Ogollah/WeConnect.svg?branch=master)](https://travis-ci.org/Ogollah/WeConnect) [![Coverage Status](https://coveralls.io/repos/github/Ogollah/Ride-my-way-api/badge.svg?branch=ft-tests)](https://coveralls.io/github/Ogollah/Ride-my-way-api?branch=ft-tests)
 # Ride-my-way-api
 Ride-my App is a carpooling application that provides drivers with the ability to create ride offers and passengers to join available ride offers.
+   
+# API Endpoints
+|Endpoint                            | Functionality                    |HTTP method 
+|------------------------------------|----------------------------------|-------------
+|/api/v1/auth/signup                 |Create account                    |POST        
+|/api/v1/auth/login                  |Login in user                     |POST
+|/api/v1/auth/reset-passwor          |Change password                   |POST
+|/api/v1/auth/logout                 |Signs out user                    |POST
+|/api/v1/ride/create                 |Create a ride offer               |POST
+|/api/v1/ride/rides                  |Fetch all ride offers             |GET
+|/api/v1/ride/<ride_id>              |Fetch a single ride offer         |GET
+|/api/v1/ride/<ride_id>              |Deletes a single ride offer       |DELETE
+|/api/v1/ride/<ride_id>              |update a ride offer               |PUT 
+|/api/v1/ride/<ride_id>/request      |Request a ride offer              |POST
+
+
 ### Quick Start
 
 1. Clone the repo

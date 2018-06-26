@@ -48,9 +48,9 @@ class SignupView(MethodView):
                 }
                 return make_response(jsonify(response)), 401
         else:
-            # Return a message to the user telling them that the ride offer already exist
+            # Return a message to the user telling them that they they already exist
             response = {
-                "message": "You already have an active ride offer"}
+                "message": "The email address has been used try another one."}
             return make_response(jsonify(response)), 409
           
 class LoginView(MethodView):
@@ -100,8 +100,9 @@ class ResetPasswordView(MethodView):
                 'message': 'You have successfully reset your password.'}
             return make_response(jsonify(response)), 200
         else:
-            response = {'message': 'Wrong password or username'}
+            response = {'message': 'Wrong password, or email'}
             return make_response(jsonify(response)), 401
+
 
 class CreateRideView(MethodView):
     """
@@ -142,11 +143,16 @@ class CreateRideView(MethodView):
                 #return a response message and a status code
                 return make_response(jsonify(response)), 201
             except Exception as e:
-                # if an error occured, therefore return a string message containing the error
-        # Return a message to the user telling them that they they already exist
-        response = {
-                "message": "The email address has been used try another one."}
-        return make_response(jsonify(response)), 409
+                # An error occured, therefore return a string message containing the error
+                response = {
+                    'message': str(e)
+                }
+                return make_response(jsonify(response)), 401
+        else:
+            # Return a message to the user telling them that the ride offer already exist
+            response = {
+                "message": "You already have an active ride offer"}
+            return make_response(jsonify(response)), 409
 
 class GetRideView(MethodView):
     """
@@ -156,19 +162,21 @@ class GetRideView(MethodView):
     def get(self):
         ride_offer_list = Ride.get_rides(self)
         #create a list of ride offers
-        ride_offer = [{x.ride_id: [{"Ride": x.ride_name,
-                                    "Driver": x.driver, "Reg no": x.reg_num, "From": x.start,
-                                    "Destination": x.stop, "Passengers": x.passengers, "Time": x.time,
-                                    "Date": x.date, "Cost": x.cost}] for x in ride_offer_list}]
-        response = {"Available Rides": ride_offer}
-        return make_response(jsonify(response)), 200
+        if ride_offer_list:
+            ride_offer = [{x.ride_id: [{"Ride": x.ride_name,
+                                        "Driver": x.driver, "Reg no": x.reg_num, "From": x.start,
+                                        "Destination": x.stop, "Passengers": x.passengers, "Time": x.time,
+                                        "Date": x.date, "Cost": x.cost}] for x in ride_offer_list}]
+            response = {"Available Rides": ride_offer}
+            return make_response(jsonify(response)), 200
+            
 
 class GetSingleRideView(MethodView):
     """
         Get a single ride offer using ride_id class view.
     """
     @jwt_required
-    def get(self, ride_id):
+    def get(self,ride_id):
         """
             Get a ride offer by id method.
         """
@@ -184,7 +192,7 @@ class GetSingleRideView(MethodView):
             response = {"message": "Your ride offer was not found!"}
             return make_response(jsonify(response)), 404
     @jwt_required
-    def delete(self, ride_id):
+    def delete(self,ride_id):
         """
             Delete a ride by using its id
         """
@@ -198,12 +206,12 @@ class GetSingleRideView(MethodView):
             response = {"message": "Not available"}
             return make_response(jsonify(response)), 404
     @jwt_required
-    def put(self, ride_id):
+    def put(self,ride_id):
         add_data = request.data
-        new_start = add_data['start']
-        new_stop = add_data['stop']
-        new_date = add_data['date']
-        new_time = add_data['time']
+        new_start = add_data['new_start']
+        new_stop = add_data['new_stop']
+        new_date = add_data['new_date']
+        new_time = add_data['new_time']
         #Check if business exists
         ride = Ride.get_ride_by_id(ride_id)
         if ride:
@@ -221,7 +229,7 @@ class PostRequestView(MethodView):
     """
     
     @jwt_required
-    def post(self, ride_id):
+    def post(self,ride_id):
         ride_offer = Ride.get_ride_by_id(ride_id)
         if ride_offer:
             request = {"Ride": ride_offer.ride_name,
@@ -283,9 +291,9 @@ auth_blueprint.add_url_rule(
 auth_blueprint.add_url_rule(
     '/api/v1/ride/rides', view_func=get_ride_offers_view, methods=['GET'])
 auth_blueprint.add_url_rule(
-    '/api/v1/ride/<ride_id>', view_func=get_ride_offer_view, methods=['GET', 'DELETE', 'PUT'])
+    '/api/v1/ride/<int:ride_id>', view_func=get_ride_offer_view, methods=['GET', 'DELETE', 'PUT'])
 auth_blueprint.add_url_rule(
-    '/api/v1/ride/<ride_id>/request', view_func=post_request_view, methods=['POST'])
+    '/api/v1/ride/<int:ride_id>/request', view_func=post_request_view, methods=['POST'])
             
 
 

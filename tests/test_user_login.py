@@ -22,7 +22,7 @@ class AuthTestCase(unittest.TestCase):
             'password': 'test_123'
         }
         self.user_data_log = {
-            'user_email': 'lenny@example.com',
+            'user_email': 'kennedy@example.com',
             'password': 'test_123'
         }
         self.not_a_user = {

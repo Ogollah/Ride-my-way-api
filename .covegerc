@@ -1,0 +1,12 @@
+[run]
+source =
+    app/
+    tests/
+
+omit =
+    api/__init__.py
+    tests/__init__.py
+    api/models.py
+
+[report]
+show_missing = True

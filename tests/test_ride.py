@@ -19,7 +19,7 @@ class RideTestCase(unittest.TestCase):
             stop, time, date and cost.
          """
         self.user_data = {
-            'user_email': 'test@example.com',
+            'user_email': 'chicky@example.com',
             'password': 'test_123'
         }
         self.user_data_2 = {
@@ -39,7 +39,7 @@ class RideTestCase(unittest.TestCase):
              'password': 'test_123'
         }
         self.user_data_6 = {
-             'user_email': 'test@example.com',
+             'user_email': 'salome@example.com',
              'password': 'test_123'
         }
         self.user_data_7 = {
@@ -50,6 +50,10 @@ class RideTestCase(unittest.TestCase):
              'user_email': 'lenny@example.com',
              'password': 'test_123'
         }
+        self.user_data_9 = {
+             'user_email': 'kipchumba@example.com',
+             'password': 'test_123'
+         }
 
         self.ride_data = {
             "ride_name": "Kamau's",
@@ -62,8 +66,85 @@ class RideTestCase(unittest.TestCase):
             "date": "21/6/2018",
             "cost": "KSH 5/KM "
         }
+        self.ride_data_sec = {
+            "ride_name": "jalopi's",
+            "driver": "Martin Kamau",
+            "reg_num": "KCS 124U",
+            "start": "Kisauni",
+            "stop": "Bamburi",
+            "passengers": "4",
+            "time": "10:00AM",
+            "date": "21/6/2018",
+            "cost": "KSH 5/KM "
+        }
+        self.ride_data_first = {
+            "ride_name": "jualaki's",
+            "driver": "Martin Kamau",
+            "reg_num": "KCS 124U",
+            "start": "Kisauni",
+            "stop": "Bamburi",
+            "passengers": "4",
+            "time": "10:00AM",
+            "date": "21/6/2018",
+            "cost": "KSH 5/KM "
+        }
+        self.ride_data_up = {
+             "ride_name": "njoro's",
+             "driver": "Martin Kamau",
+             "reg_num": "KCS 124U",
+             "start": "Kisauni",
+             "stop": "Bamburi",
+             "passengers": "4",
+             "time": "10:00AM",
+             "date": "21/6/2018",
+             "cost": "KSH 5/KM "
+         }
+        self.ride_data_in = {
+             "ride_name": "kambua's",
+             "driver": "Martin Kamau",
+             "reg_num": "KCS 124U",
+             "start": "Kisauni",
+             "stop": "Bamburi",
+             "passengers": "4",
+             "time": "10:00AM",
+             "date": "21/6/2018",
+             "cost": "KSH 5/KM "
+         }
         self.ride_data_1 = {
             "ride_name": "Martin's",
+            "driver": "Martin Kamau",
+            "reg_num": "KCS 124U",
+            "start": "Kisauni",
+            "stop": "Bamburi",
+            "passengers": "4",
+            "time": "10:00AM",
+            "date": "21/6/2018",
+            "cost": "KSH 5/KM "
+        }
+        self.ride_data_thir = {
+            "ride_name": "Zerru's",
+            "driver": "Martin Kamau",
+            "reg_num": "KCS 124U",
+            "start": "Kisauni",
+            "stop": "Bamburi",
+            "passengers": "4",
+            "time": "10:00AM",
+            "date": "21/6/2018",
+            "cost": "KSH 5/KM "
+        }
+        self.ride_data_four = {
+            "ride_name": "kimilili's",
+            "driver": "Martin Kamau",
+            "reg_num": "KCS 124U",
+            "start": "Kisauni",
+            "stop": "Bamburi",
+            "passengers": "4",
+            "time": "10:00AM",
+            "date": "21/6/2018",
+            "cost": "KSH 5/KM "
+        }
+        self.ride_data_five = {
+            "ride_name": "likui's",
             "driver": "Martin Kamau",
             "reg_num": "KCS 124U",
             "start": "Kisauni",
@@ -91,7 +172,8 @@ class RideTestCase(unittest.TestCase):
         self.assertEqual(login_response.status_code, 200)
         #Define header dictionary
         access_token = json.loads(login_response.data.decode())['access_token']
-        response = self.client().post('/api/v1/ride/create', headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data)
+        response = self.client().post('/api/v1/ride/create',
+                                      headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data_first)
         #return message in json format
         result = json.loads(response.data.decode())
         #assert that the request contains a success message and a 201 status code
@@ -110,9 +192,11 @@ class RideTestCase(unittest.TestCase):
         #Define header dictionary
         access_token = json.loads(login_response.data.decode())['access_token']
         #create a new ride offer
-        response = self.client().post('/api/v1/ride/create', headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data_1)
+        response = self.client().post('/api/v1/ride/create',
+                                      headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data_1)
         #create the same ride offer again
-        response = self.client().post('/api/v1/ride/create', headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data_1)
+        response = self.client().post('/api/v1/ride/create',
+                                      headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data_1)
         #return message in json format
         result = json.loads(response.data.decode())
         #assert that the reques a message and a 202 status code
@@ -131,7 +215,8 @@ class RideTestCase(unittest.TestCase):
         #Define header dictionary
         access_token = json.loads(login_response.data.decode())['access_token']
         #create a new ride offer
-        response = self.client().post('/api/v1/ride/create', headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data)
+        response = self.client().post('/api/v1/ride/create',
+                                      headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data_four)
         #get a list of all ride offers.
         response = self.client().get('/api/v1/ride/rides',
                                      headers=dict(Authorization='Bearer ' + access_token))
@@ -149,11 +234,12 @@ class RideTestCase(unittest.TestCase):
         #Define header dictionary
         access_token = json.loads(login_response.data.decode())['access_token']
         #create a new ride
-        response = self.client().post('/api/v1/rides/create', headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data)
+        response = self.client().post('/api/v1/ride/create',
+                                      headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data_thir)
         self.assertEqual(response.status_code, 201)
         #get a ride using its id
         response = self.client().get(
-            '/api/v1/ride/1', headers=dict(Authorization='Bearer ' + access_token))
+            '/api/v1/ride/4', headers=dict(Authorization='Bearer ' + access_token))
         # assert that the status code is 200
         self.assertEqual(response.status_code, 200)
 
@@ -168,16 +254,16 @@ class RideTestCase(unittest.TestCase):
         #Define header dictionary
         access_token = json.loads(login_response.data.decode())['access_token']
         #create a new ride
-        response = self.client().post('/api/v1/rides/create', headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data)
+        response = self.client().post('/api/v1/ride/create',
+                                      headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data_sec)
         self.assertEqual(response.status_code, 201)
         #get a ride using its id
         response = self.client().get(
-            '/api/v1/ride/2', headers=dict(Authorization='Bearer ' + access_token))
+            '/api/v1/ride/11', headers=dict(Authorization='Bearer ' + access_token))
         #return message in json format
         result = json.loads(response.data.decode())
         # assert that the status code is 404 and not available message
-        self.assertEqual(result['message'],
-                         "Your ride offer was not found!")
+        self.assertEqual(result['message'],"Your ride offer was not found!")
         self.assertEqual(response.status_code, 404)
 
     def test_delete_a_ride_by_id(self):
@@ -191,7 +277,8 @@ class RideTestCase(unittest.TestCase):
         #Define header dictionary
         access_token = json.loads(login_response.data.decode())['access_token']
         #create a new ride
-        response = self.client().post('/api/v1/rides/create', headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data)
+        response = self.client().post('/api/v1/ride/create',
+                                      headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data_sec)
         #delete a ride by id
         response = self.client().delete(
             '/api/v1/ride/1', headers=dict(Authorization='Bearer ' + access_token))
@@ -217,13 +304,14 @@ class RideTestCase(unittest.TestCase):
         #Define header dictionary
         access_token = json.loads(login_response.data.decode())['access_token']
         #create a new ride
-        response = self.client().post('/api/v1/rides/create', headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data)
+        response = self.client().post('/api/v1/ride/create',
+                                      headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data)
         self.assertEqual(response.status_code, 201)
         response = self.client().delete(
-            '/api/v1/ride/2', headers=dict(Authorization='Bearer ' + access_token))
+            '/api/v1/ride/9', headers=dict(Authorization='Bearer ' + access_token))
         #return message in json format
         result = json.loads(response.data.decode())
-        self.assertEqual(response.status_code, 204)
+        self.assertEqual(response.status_code, 404)
         self.assertEqual(result['message'], 'Not available')
 
     def test_update_ride_offer(self):
@@ -237,9 +325,11 @@ class RideTestCase(unittest.TestCase):
         #Define header dictionary
         access_token = json.loads(login_response.data.decode())['access_token']
         #create a new ride
-        response = self.client().post('/api/v1/ride/create', headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data)
+        response = self.client().post('/api/v1/ride/create',
+                                      headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data_up)
         self.assertEqual(response.status_code, 201)
-        response = self.client().put('/api/v1/ride/1', headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data_update)
+        response = self.client().put('/api/v1/ride/1',
+                                     headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data_update)
         #return message in json format
         result = json.loads(response.data.decode())
         #get a status code 201 and a success message
@@ -251,16 +341,17 @@ class RideTestCase(unittest.TestCase):
         """
             Test a user can not update a ride which is not available.
         """
-        response = self.client().post('/api/v1/auth/signup', data=self.user_data)
+        response = self.client().post('/api/v1/auth/signup', data=self.user_data_9)
         self.assertEqual(response.status_code, 201)
-        login_response = self.client().post('/api/v1/auth/login', data=self.user_data)
+        login_response = self.client().post('/api/v1/auth/login', data=self.user_data_9)
         self.assertEqual(login_response.status_code, 200)
         #Define header dictionary
         access_token = json.loads(login_response.data.decode())['access_token']
         #create a new ride
-        response = self.client().post('/api/v1/ride/create', headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data)
+        response = self.client().post('/api/v1/ride/create',
+                                      headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data_in)
         self.assertEqual(response.status_code, 201)
-        response = self.client().put('/api/v1/ride/3', headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data_update)
+        response = self.client().put('/api/v1/ride/30', headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data_update)
         #return message in json format
         result = json.loads(response.data.decode())
         #get a status code 204 and a success message
