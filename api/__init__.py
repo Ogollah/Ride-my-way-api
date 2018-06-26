@@ -7,7 +7,7 @@ from flask_jwt_extended import JWTManager
 
 # local import
 from instance.config import app_config
-from auth.views import blacklist
+from api.auth.views import blacklist
 
 
 def create_app(config_name):
@@ -22,7 +22,7 @@ def create_app(config_name):
         return jti in blacklist
 
     # import the authentication blueprint and register it on the app
-    from auth import auth_blueprint
+    from api.auth import auth_blueprint
     app.register_blueprint(auth_blueprint)
 
     return app
