@@ -61,9 +61,28 @@ class CreateRideView(MethodView):
                 "message": "You already have an active ride offer"}
             return make_response(jsonify(response)), 409
 
+class GetRideView(MethodView):
+    """
+        Get created ride offer.
+    """
+
+    def get(self):
+        ride_offer_list = Ride.get_rides(self)
+        #create a list of ride offers
+        ride_offer = [{x.ride_id: [{"Ride": x.ride_name,
+                                    "Driver": x.driver, "Reg no": x.reg_num, "From": x.start,
+                                    "Destination": x.stop, "Passengers": x.passengers, "Time": x.time,
+                                    "Date": x.date, "Cost": x.cost}] for x in ride_offer_list}]
+        response = {"Available Rides": ride_offer}
+        return make_response(jsonify(response)), 200
+
 # Define the API resource
 #Ride offer
 ride_offer_view = CreateRideView.as_view('ride_offer_view')
+get_ride_offers_view = GetRideView.as_view('get_ride_offers_view')
 
 auth_blueprint.add_url_rule(
     '/api/v1/ride/create', view_func=ride_offer_view, methods=['POST'])
+
+auth_blueprint.add_url_rule(
+    '/api/v1/ride/rides', view_func=get_ride_offers_view, methods=['GET'])
