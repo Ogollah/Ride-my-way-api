@@ -27,6 +27,12 @@ class Ride(object):
         self.ride_id = Ride.class_counter
         Ride.class_counter += 1
 
+    def update_ride(self, new_start, new_stop, new_time, new_date):
+        """This is a method for updating ride offer."""
+        self.start = new_start
+        self.stop = new_stop
+        self.time = new_time
+        self.date = new_date
 
     @staticmethod
     def get_ride_by_id(ride_id):

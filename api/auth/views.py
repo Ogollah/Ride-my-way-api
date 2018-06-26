@@ -98,18 +98,35 @@ class GetSingleRideView(MethodView):
             return make_response(jsonify(response)), 404
 
     def delete(self, ride_id):
-            """
-                Delete a ride by using its id
-            """
-            #Check if ride exists
-            ride = Ride.get_ride_by_id(ride_id)
-            if ride:
-                ride.delete_ride(ride)
-                response = {"message": "Ride offer successfully deleted!"}
-                return make_response(jsonify(response)), 200
-            else:
-                response = {"message": "Not available"}
-                return make_response(jsonify(response)), 404
+        """
+            Delete a ride by using its id
+        """
+        #Check if ride exists
+        ride = Ride.get_ride_by_id(ride_id)
+        if ride:
+            ride.delete_ride(ride)
+            response = {"message": "Ride offer successfully deleted!"}
+            return make_response(jsonify(response)), 200
+        else:
+            response = {"message": "Not available"}
+            return make_response(jsonify(response)), 404
+
+    def put(self, ride_id):
+        add_data = request.data
+        new_start = add_data['start']
+        new_stop = add_data['stop']
+        new_date = add_data['date']
+        new_time = add_data['time']
+        #Check if business exists
+        ride = Ride.get_ride_by_id(ride_id)
+        if ride:
+            ride.update_ride(
+                new_start, new_stop, new_date, new_time)
+            response = {"message": "Your ride is successfully updated!"}
+            return make_response(jsonify(response)), 201
+        else:
+            response = {"message": "Ride offer you are looking for is not availbale"}
+            return make_response(jsonify(response)), 404
 
 # Define the API resource
 #Ride offer
@@ -122,4 +139,4 @@ auth_blueprint.add_url_rule(
 auth_blueprint.add_url_rule(
     '/api/v1/ride/rides', view_func=get_ride_offers_view, methods=['GET'])
 auth_blueprint.add_url_rule(
-    '/api/v1/ride/<ride_id>', view_func=get_ride_offer_view, methods=['GET', 'DELETE'])
+    '/api/v1/ride/<ride_id>', view_func=get_ride_offer_view, methods=['GET', 'DELETE', 'PUT'])
