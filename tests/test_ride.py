@@ -118,7 +118,7 @@ class RideTestCase(unittest.TestCase):
         #assert that the reques a message and a 202 status code
         self.assertEqual(result['message'],
                          "You already have an active ride offer")
-        self.assertEqual(response.status_code, 202)
+        self.assertEqual(response.status_code, 409)
 
     def test_view_ride_offer_list(self):
         """
