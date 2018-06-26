@@ -52,10 +52,32 @@ class SignupView(MethodView):
             response = {
                 "message": "The email address has been used try another one."}
             return make_response(jsonify(response)), 409
-            
+
+class LoginView(MethodView):
+    """Logging in registred user"""
+
+    def post(self):
+        """Method for logging in a signed up user"""
+        user_email = request.data['user_email']
+        registred_user = User.get_user_by_email(
+            user_email=request.data['user_email'])
+        if registred_user and registred_user.check_password_hash(request.data['password']):
+            # Generate access token. This will be used as the authorization header
+            access_token = create_access_token(identity=user_email)
+            response = {'message': "You have successfully logged in!.",
+                        "access_token": access_token}
+            return make_response(jsonify(response)), 200
+        else:
+            # User does not exist. we return an error message
+            response = {
+                "message": "Invalid email or password, Please try again!"}
+            return make_response(jsonify(response)), 401
+
+
 # Define the API resource
 #user
 signup_view = SignupView.as_view('signup_view')
+login_view = LoginView.as_view('login_view')
 
 #User
 # Define the rule for the signup url --->  /api/v1/auth/signup
