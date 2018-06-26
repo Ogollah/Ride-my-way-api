@@ -77,8 +77,8 @@ class RequestTestCase(unittest.TestCase):
             '/api/v1/ride/1', headers=dict(Authorization='Bearer ' + access_token))
         #return message in json format
         result = json.loads(response.data.decode())
-        #get a status code 204 and a success message
-        self.assertEqual(response.status_code, 204)
+        #get a status code 404 and a success message
+        self.assertEqual(response.status_code, 404)
         self.assertEqual(result['message'],
                          "The ride you are looking for is not available!")
 
