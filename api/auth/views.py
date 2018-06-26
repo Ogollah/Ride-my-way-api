@@ -97,6 +97,20 @@ class GetSingleRideView(MethodView):
             response = {"message": "Your ride offer was not found!"}
             return make_response(jsonify(response)), 404
 
+    def delete(self, ride_id):
+            """
+                Delete a ride by using its id
+            """
+            #Check if ride exists
+            ride = Ride.get_ride_by_id(ride_id)
+            if ride:
+                ride.delete_ride(ride)
+                response = {"message": "Ride offer successfully deleted!"}
+                return make_response(jsonify(response)), 200
+            else:
+                response = {"message": "Not available"}
+                return make_response(jsonify(response)), 404
+
 # Define the API resource
 #Ride offer
 ride_offer_view = CreateRideView.as_view('ride_offer_view')
@@ -108,4 +122,4 @@ auth_blueprint.add_url_rule(
 auth_blueprint.add_url_rule(
     '/api/v1/ride/rides', view_func=get_ride_offers_view, methods=['GET'])
 auth_blueprint.add_url_rule(
-    '/api/v1/ride/<ride_id>', view_func=get_ride_offer_view, methods=['GET'])
+    '/api/v1/ride/<ride_id>', view_func=get_ride_offer_view, methods=['GET', 'DELETE'])

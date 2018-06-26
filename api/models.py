@@ -50,3 +50,8 @@ class Ride(object):
     def save_ride(self):
         """Save a ride in RIDES list."""
         RIDES.append(self)
+    
+    @staticmethod
+    def delete_ride(self):
+        """Delete a ride method."""
+        RIDES.remove(self)
