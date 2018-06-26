@@ -73,15 +73,40 @@ class LoginView(MethodView):
                 "message": "Invalid email or password, Please try again!"}
             return make_response(jsonify(response)), 401
 
+class LogoutView(MethodView):
+    """Logout Resource class."""
+    @jwt_required
+    def post(self):
+        """Log out a given user by blacklisting user's token
+        """
+        jti = get_raw_jwt()['jti']
+        blacklist.add(jti)
+        response = {"message": "You have successfully logged out"}
+        return make_response(jsonify(response)), 200
+
 
 # Define the API resource
 #user
 signup_view = SignupView.as_view('signup_view')
 login_view = LoginView.as_view('login_view')
+logout_view = LogoutView.as_view('logout_view')
+
 
 #User
 # Define the rule for the signup url --->  /api/v1/auth/signup
 auth_blueprint.add_url_rule(
     '/api/v1/auth/signup',
     view_func=signup_view,
+    methods=['POST'])
+
+# Define the rule for the login url --->  /api/v1/auth/login
+auth_blueprint.add_url_rule(
+    '/api/v1/auth/login',
+    view_func=login_view,
+    methods=['POST'])
+
+# Define the rule for the logout url --->  /api/v1/auth/logout
+auth_blueprint.add_url_rule(
+    '/api/v1/auth/logout',
+    view_func=logout_view,
     methods=['POST'])
