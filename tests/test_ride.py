@@ -22,6 +22,35 @@ class RideTestCase(unittest.TestCase):
             'user_email': 'test@example.com',
             'password': 'test_123'
         }
+        self.user_data_2 = {
+            'user_email': 'mash@example.com',
+            'password': 'test_123'
+        }
+        self.user_data_3 = {
+             'user_email': 'winny@example.com',
+             'password': 'test123'
+        }
+        self.user_data_4 = {
+             'user_email': 'mato@example.com',
+             'password': 'test123'
+         }
+        self.user_data_5 = {
+             'user_email': 'kenya@example.com',
+             'password': 'test_123'
+        }
+        self.user_data_6 = {
+             'user_email': 'test@example.com',
+             'password': 'test_123'
+        }
+        self.user_data_7 = {
+              'user_email': 'boby@example.com',
+              'password': 'test_123'
+        }
+        self.user_data_8 = {
+             'user_email': 'lenny@example.com',
+             'password': 'test_123'
+        }
+
         self.ride_data = {
             "ride_name": "Kamau's",
             "driver": "Martin Kamau",
@@ -74,9 +103,9 @@ class RideTestCase(unittest.TestCase):
         """
             Test a user cannot create more than one ride at a time.
         """
-        response = self.client().post('/api/v1/auth/signup', data=self.user_data)
+        response = self.client().post('/api/v1/auth/signup', data=self.user_data_2)
         self.assertEqual(response.status_code, 201)
-        login_response = self.client().post('/api/v1/auth/login', data=self.user_data)
+        login_response = self.client().post('/api/v1/auth/login', data=self.user_data_2)
         self.assertEqual(login_response.status_code, 200)
         #Define header dictionary
         access_token = json.loads(login_response.data.decode())['access_token']
@@ -95,9 +124,9 @@ class RideTestCase(unittest.TestCase):
         """
             Test that a user can view a list of all rides on offer.
         """
-        response = self.client().post('/api/v1/auth/signup', data=self.user_data)
+        response = self.client().post('/api/v1/auth/signup', data=self.user_data_3)
         self.assertEqual(response.status_code, 201)
-        login_response = self.client().post('/api/v1/auth/login', data=self.user_data)
+        login_response = self.client().post('/api/v1/auth/login', data=self.user_data_3)
         self.assertEqual(login_response.status_code, 200)
         #Define header dictionary
         access_token = json.loads(login_response.data.decode())['access_token']
@@ -113,9 +142,9 @@ class RideTestCase(unittest.TestCase):
         """
             Test that user can get a single ride offer using its id.
         """
-        response = self.client().post('/api/v1/auth/signup', data=self.user_data)
+        response = self.client().post('/api/v1/auth/signup', data=self.user_data_4)
         self.assertEqual(response.status_code, 201)
-        login_response = self.client().post('/api/v1/auth/login', data=self.user_data)
+        login_response = self.client().post('/api/v1/auth/login', data=self.user_data_4)
         self.assertEqual(login_response.status_code, 200)
         #Define header dictionary
         access_token = json.loads(login_response.data.decode())['access_token']
@@ -132,9 +161,9 @@ class RideTestCase(unittest.TestCase):
         """
             Test a user view ride offer that has either been deleted, expired, or not created.
         """
-        response = self.client().post('/api/v1/auth/signup', data=self.user_data)
+        response = self.client().post('/api/v1/auth/signup', data=self.user_data_5)
         self.assertEqual(response.status_code, 201)
-        login_response = self.client().post('/api/v1/auth/login', data=self.user_data)
+        login_response = self.client().post('/api/v1/auth/login', data=self.user_data_5)
         self.assertEqual(login_response.status_code, 200)
         #Define header dictionary
         access_token = json.loads(login_response.data.decode())['access_token']
@@ -155,9 +184,9 @@ class RideTestCase(unittest.TestCase):
         """
             Test a user can delete a ride offer using its id.
         """
-        response = self.client().post('/api/v1/auth/signup', data=self.user_data)
+        response = self.client().post('/api/v1/auth/signup', data=self.user_data_6)
         self.assertEqual(response.status_code, 201)
-        login_response = self.client().post('/api/v1/auth/login', data=self.user_data)
+        login_response = self.client().post('/api/v1/auth/login', data=self.user_data_6)
         self.assertEqual(login_response.status_code, 200)
         #Define header dictionary
         access_token = json.loads(login_response.data.decode())['access_token']
@@ -181,9 +210,9 @@ class RideTestCase(unittest.TestCase):
         """
             Test a user can not delete a ride offer which is not available.
         """
-        response = self.client().post('/api/v1/auth/signup', data=self.user_data)
+        response = self.client().post('/api/v1/auth/signup', data=self.user_data_7)
         self.assertEqual(response.status_code, 201)
-        login_response = self.client().post('/api/v1/auth/login', data=self.user_data)
+        login_response = self.client().post('/api/v1/auth/login', data=self.user_data_7)
         self.assertEqual(login_response.status_code, 200)
         #Define header dictionary
         access_token = json.loads(login_response.data.decode())['access_token']
@@ -201,9 +230,9 @@ class RideTestCase(unittest.TestCase):
         """
             Test a user can update details of a ride offer. 
         """
-        response = self.client().post('/api/v1/auth/signup', data=self.user_data)
+        response = self.client().post('/api/v1/auth/signup', data=self.user_data_8)
         self.assertEqual(response.status_code, 201)
-        login_response = self.client().post('/api/v1/auth/login', data=self.user_data)
+        login_response = self.client().post('/api/v1/auth/login', data=self.user_data_8)
         self.assertEqual(login_response.status_code, 200)
         #Define header dictionary
         access_token = json.loads(login_response.data.decode())['access_token']

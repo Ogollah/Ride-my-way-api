@@ -5,6 +5,7 @@ import unittest
 import json
 from api import create_app
 
+
 class AuthTestCase(unittest.TestCase):
     """
         Test case for User registration.
@@ -17,23 +18,22 @@ class AuthTestCase(unittest.TestCase):
         self.client = self.app.test_client
         # This is the user test json data with a predefined email and password
         self.user_data = {
-            'user_email': 'test@example.com',
-            'password': 'test_123'
+            'user_email': 'best@example.com',
+            'password': 'test123'
         }
         self.user_data_2 = {
-            "user_email":"example@example.com",
+            "user_email": "example@example.com",
             "password": "testexample"
         }
         self.user_data_3 = {
-             "user_email": "example.com",
-             "password": "testexample"
-         }
+            "user_email": "example.com",
+            "password": "testexample"
+        }
 
         self.user_data_4 = {
             "user_email": "kelly@example.com",
             "password": "tes"
         }
-
 
     def test_user_signup(self):
         """Test user can signup for a new account."""
@@ -73,6 +73,7 @@ class AuthTestCase(unittest.TestCase):
         result = json.loads(response.data.decode())
         self.assertEqual(
             result["message"], "Password should not be less than four characters.")
+
 
 if __name__ == '__main__':
     unittest.main()

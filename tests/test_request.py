@@ -20,6 +20,10 @@ class RequestTestCase(unittest.TestCase):
             'user_email': 'test@example.com',
             'password': 'test_123'
         }
+        self.user_data_2 = {
+            'user_email': 'test@example.com',
+            'password': 'test_123'
+        }
         self.ride_data = {
             "ride_name": "Kamau's",
             "driver": "Martin Kamau",
@@ -60,9 +64,9 @@ class RequestTestCase(unittest.TestCase):
         """
             Test user cannot request for a ride offer which is not available.
         """
-        response = self.client().post('/api/v1/auth/signup', data=self.user_data)
+        response = self.client().post('/api/v1/auth/signup', data=self.user_data_2)
         self.assertEqual(response.status_code, 201)
-        login_response = self.client().post('/api/v1/auth/login', data=self.user_data)
+        login_response = self.client().post('/api/v1/auth/login', data=self.user_data_2)
         self.assertEqual(login_response.status_code, 200)
         #Define header dictionary
         access_token = json.loads(login_response.data.decode())['access_token']
