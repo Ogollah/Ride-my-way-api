@@ -15,7 +15,7 @@ class Config(object):
     SECRET = os.getenv('SECRET')
     TESTING = False
     JWT_ALGORITHM = 'HS256'
-    JWT_SECRET_KEY = 'jtw-very-supa-secret'
+    JWT_SECRET_KEY = '\xfb\xd8\xa4\xb9\xdd\xafYC)\xa8\xdd\\\xb2z\xb9\x94;0\xe9\xba\xff\xfeY\x83'
     JWT_BLACKLIST_ENABLED = True
     JWT_BLACKLIST_TOKEN_CHECKS = ['access', 'refresh']
 
