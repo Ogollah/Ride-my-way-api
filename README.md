@@ -41,6 +41,7 @@ Ride-my App is a carpooling application that provides drivers with the ability t
   $ python run.py
   ```
   ```
+  Or
   $ export FLASK_APP=run.py
   ```
   ```
@@ -49,3 +50,8 @@ Ride-my App is a carpooling application that provides drivers with the ability t
 
 6. Navigate to [http://localhost:5000](http://localhost:5000)
 
+# Project Owner
+   Andela Kenya
+
+# Developer
+   [Stephen Ogolla](https://github.com/Ogollah/)
