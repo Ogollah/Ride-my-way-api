@@ -1,0 +1,313 @@
+FORMAT: 1A
+HOST: https://ridemywayherokuapi.herokuapp.com/
+
+# Ride-my-way-api
+
+Ride-my App is a carpooling application that provides drivers with the ability to create ride offers and passengers to join available ride offers.
+
+## User Signup [/api/v1/auth/signup]
+    
+### Create a user account [POST]
+
+You signup for account using Json request of email and password. 
+The email address must be valid with @ sigh.
+The minimum length set for pass word is 4.
+
++ Request (application/json)
+
+        {
+            "user_email": "myandeladream@mail.com",
+            "password": "unique"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "Message": "Your have successfully signup for a new account."
+        }
+
++ Response 400 (application/json)
+
+        {
+            "Message": "Password should not be less than four characters."
+        }
+            
++ Response 400 (application/json)
+
+        {
+            "Message": "Invalid email address."
+        }
+            
++ Response 409 (application/json)
+
+        {
+            "Message": "The email address has been used try another one."
+        }
+            
+## User Login [/api/v1/auth/login]
+
+### Login user [POST]
+
+User can sighn in by providing their email and password.
+
++ Request (application/json)
+
+        {
+            "user_email": "myandeladream@mail.com",
+            "password": "unique"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "Message'": "You have successfully logged in!", 
+            Access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzAwMzk1NjksIm5iZiI6MTUzMDAzOTU2OSwianRpIjoiMWQwMmRjN2YtYzZiMy00ODg4LWI4OGEtNTA4MDI0NTFjMDFkIiwiZXhwIjoxNTMwMDQwNDY5LCJpZGVudGl0eSI6ImV4YW1wbGV4YUBtcGxlLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.aLWJFuzfUldOxFxxzqLOclMQaNlfDZQGWMSZ2Fnt5S0"
+        }
+
++ Response 401 (application/json)
+
+        {
+          "Message": "Invalid email or password, Please try again!"
+        }
+        
+            
+## User Logout [/api/v1/auth/logout]
+
+### Logout a user [POST]
+
+User logout by blacklisting user's token.
+
++ Request (application/json)
+
+    + Headers
+    
+            Access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzAwMzk1NjksIm5iZiI6MTUzMDAzOTU2OSwianRpIjoiMWQwMmRjN2YtYzZiMy00ODg4LWI4OGEtNTA4MDI0NTFjMDFkIiwiZXhwIjoxNTMwMDQwNDY5LCJpZGVudGl0eSI6ImV4YW1wbGV4YUBtcGxlLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.aLWJFuzfUldOxFxxzqLOclMQaNlfDZQGWMSZ2Fnt5S0"
+
++ Response 200 (application/json)
+
+        {
+            "Message": "You have successfully logged out"
+        }
+        
+## Reset Password [/api/v1/auth/reset-password]
+
+### Reset User Password [POST]
+
+User can reset password by confirming their email and password. 
+
++ Request (application/json)
+     + Headers
+    
+            Access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzAwMzk1NjksIm5iZiI6MTUzMDAzOTU2OSwianRpIjoiMWQwMmRjN2YtYzZiMy00ODg4LWI4OGEtNTA4MDI0NTFjMDFkIiwiZXhwIjoxNTMwMDQwNDY5LCJpZGVudGl0eSI6ImV4YW1wbGV4YUBtcGxlLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.aLWJFuzfUldOxFxxzqLOclMQaNlfDZQGWMSZ2Fnt5S0"
+
+        {
+        "user_emai": "myandeladream@mail.com",
+        "old_password": "unique",
+        "new_password":"better"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "Message": "You have successfully reset your password."
+        }
+        
++ Response 401 (application/json)
+
+        {
+            "Message": "Wrong password or username"
+        }
+#### Create a Ride View [/api/ride/create]
+### Create a ride offer [POST]
+
+User can add a create a ride offer as a driver.
+
++ Request (application/json)
+    + Headers
+    
+            Access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzAwMzk1NjksIm5iZiI6MTUzMDAzOTU2OSwianRpIjoiMWQwMmRjN2YtYzZiMy00ODg4LWI4OGEtNTA4MDI0NTFjMDFkIiwiZXhwIjoxNTMwMDQwNDY5LCJpZGVudGl0eSI6ImV4YW1wbGV4YUBtcGxlLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.aLWJFuzfUldOxFxxzqLOclMQaNlfDZQGWMSZ2Fnt5S0"
+    
+    + Body
+    
+        {
+            "ride_name": "Martin's",
+            "driver": "Martin Kamau",
+            "reg_num": "KCS 124U",
+            "start": "Kisauni",
+            "stop": "Bamburi",
+            "passengers": "4",
+            "time": "10:00AM",
+            "date": "21/6/2018",
+            "cost": "KSH 5/KM "
+        }
+
++ Response 201 (application/json)
+
+            {
+                "message": "Your ride offer has been added succesfully."
+            }
+            
++ Response 409 (application/json)
+
+        {
+            "Message": "You already have an active ride offer"
+        }
+        
+#### Get Ride offers View [/api/ride/rides]
+### Create a ride offer [GET]
+
+User can get a list of all ride offers.
+
++ Request (application/json)
+    + Headers
+    
+            Access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzAwMzk1NjksIm5iZiI6MTUzMDAzOTU2OSwianRpIjoiMWQwMmRjN2YtYzZiMy00ODg4LWI4OGEtNTA4MDI0NTFjMDFkIiwiZXhwIjoxNTMwMDQwNDY5LCJpZGVudGl0eSI6ImV4YW1wbGV4YUBtcGxlLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.aLWJFuzfUldOxFxxzqLOclMQaNlfDZQGWMSZ2Fnt5S0"
+    
+        
+
++ Response 200 (application/json)
+
+            {
+    "Available Rides": [
+        {
+            "1": [
+                {
+                    "Cost": "KSH 5/KM ",
+                    "Date": "21/6/2018",
+                    "Destination": "Bamburi",
+                    "Driver": "Martin Kamau",
+                    "From": "Kisauni",
+                    "Passengers": "4",
+                    "Reg no": "KCS 124U",
+                    "Ride": "weka's",
+                    "Time": "10:00AM"
+                }
+            ],
+            "2": [
+                {
+                    "Cost": "KSH 5/KM ",
+                    "Date": "21/6/2018",
+                    "Destination": "Bamburi",
+                    "Driver": "Martin Kamau",
+                    "From": "Kisauni",
+                    "Passengers": "4",
+                    "Reg no": "KCS 124U",
+                    "Ride": "Martin's",
+                    "Time": "10:00AM"
+                }
+            ]
+        }
+    ]
+}
+            
+### Get a Single Ride Offer View [/api/ride/]
+### Get details of a ride offer [/api/ride/<int:ride_id>]
+User as a passanger can get get a single ride offer
++ parameters
+
+    + ride_id (required, Int)
+
+### Retrieve one ride offer [GET].
+User can get information about a ride offer
++ Request (application/json)
+    + Headers
+    
+            Access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzAwMzk1NjksIm5iZiI6MTUzMDAzOTU2OSwianRpIjoiMWQwMmRjN2YtYzZiMy00ODg4LWI4OGEtNTA4MDI0NTFjMDFkIiwiZXhwIjoxNTMwMDQwNDY5LCJpZGVudGl0eSI6ImV4YW1wbGV4YUBtcGxlLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.aLWJFuzfUldOxFxxzqLOclMQaNlfDZQGWMSZ2Fnt5S0"
+            
++ Response 200 (application/json)
+        
+            {
+            "Cost": "KSH 5/KM ",
+            "Date": "21/6/2018",
+            "Destination": "Bamburi",
+            "Driver": "Martin Kamau",
+            "From": "Kisauni",
+            "Passengers": "4",
+            "Reg no": "KCS 124U",
+            "Ride": "weka's",
+            "Time": "10:00AM"
+            }
+ 
++ Response 404 (application/json)
+
+        {
+            "message": "Your ride offer was not found!"
+        }
+        
+### Delete a Ride Offer [DELETE]
+
+User can delete a ride offer.
+
++ Request (application/json)
+
+    + Headers
+    
+            Access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzAwMzk1NjksIm5iZiI6MTUzMDAzOTU2OSwianRpIjoiMWQwMmRjN2YtYzZiMy00ODg4LWI4OGEtNTA4MDI0NTFjMDFkIiwiZXhwIjoxNTMwMDQwNDY5LCJpZGVudGl0eSI6ImV4YW1wbGV4YUBtcGxlLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.aLWJFuzfUldOxFxxzqLOclMQaNlfDZQGWMSZ2Fnt5S0"
+
++ Response 200 (application/json)
+
+        {
+            "Message": "Ride offer successfully deleted!"
+        }
+        
++ Response 404 (application/json)
+
+        {
+            "Message": "Not available"
+        }
+        
+
+### Update Ride Offer [PUT]
+
+User as a can be able to update the details of the a ride offer.
+
++ Request (application/json)
+
+    + Headers
+    
+            Access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzAwMzk1NjksIm5iZiI6MTUzMDAzOTU2OSwianRpIjoiMWQwMmRjN2YtYzZiMy00ODg4LWI4OGEtNTA4MDI0NTFjMDFkIiwiZXhwIjoxNTMwMDQwNDY5LCJpZGVudGl0eSI6ImV4YW1wbGV4YUBtcGxlLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.aLWJFuzfUldOxFxxzqLOclMQaNlfDZQGWMSZ2Fnt5S0"
+            
+    + Body
+
+            {
+            "new_start": "Kisauni",
+            "new_stop": "Bamburi",
+            "new_time": "10:00AM",
+            "new_date": "21/6/2018"
+            }
+            
++ Response 201 (application/json)
+
+            {
+            "message":"Your ride is successfully updated!"
+            }
+        
++ Response 404 (application/json)
+
+        {
+            "message": "Ride offer you are looking for is not availbale"
+        }
+        
+#### Request a Ride Offer [/api/ride/<int:<ride_id>/request]
+### Request a Ride [POST]
+
+User can request for a ride.
+
++ Request (application/json)
+    + Headers
+    
+            Access_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzAwMzk1NjksIm5iZiI6MTUzMDAzOTU2OSwianRpIjoiMWQwMmRjN2YtYzZiMy00ODg4LWI4OGEtNTA4MDI0NTFjMDFkIiwiZXhwIjoxNTMwMDQwNDY5LCJpZGVudGl0eSI6ImV4YW1wbGV4YUBtcGxlLmNvbSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.aLWJFuzfUldOxFxxzqLOclMQaNlfDZQGWMSZ2Fnt5S0"
+    
+        
+
++ Response 200 (application/json)
+
+            {
+              "message":"Your ride request has been received successfully!"
+            }
+            
++ Response 404 (application/json)
+
+            {
+              "message":"The ride you are looking for is not available!"
+            }
