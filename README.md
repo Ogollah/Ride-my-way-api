@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Ogollah/Ride-my-way-api.svg?branch=develop)](https://travis-ci.org/Ogollah/Ride-my-way-api)[![Coverage Status][![Coverage Status](https://coveralls.io/repos/github/Ogollah/Ride-my-way-api/badge.svg?branch=develop)](https://coveralls.io/github/Ogollah/Ride-my-way-api?branch=develop)
+[![Build Status](https://travis-ci.org/Ogollah/Ride-my-way-api.svg?branch=develop)](https://travis-ci.org/Ogollah/Ride-my-way-api)[![Coverage Status](https://coveralls.io/repos/github/Ogollah/Ride-my-way-api/badge.svg?branch=develop)](https://coveralls.io/github/Ogollah/Ride-my-way-api?branch=develop)
 # Ride-my-way-api
 Ride-my App is a carpooling application that provides drivers with the ability to create ride offers and passengers to join available ride offers.
    
