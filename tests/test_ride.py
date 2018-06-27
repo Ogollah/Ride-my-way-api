@@ -162,6 +162,13 @@ class RideTestCase(unittest.TestCase):
             "new_date": "21/6/2018"
         }
 
+        self.ride_data_update_2 = {
+            "new_start": "Likoni",
+            "new_stop": "Bamburi",
+            "new_time": "10:00AM",
+            "new_date": "21/6/2018"
+        }
+
     def test_crete_a_ride_offer(self):
         """
             Test that a user can create a ride works correctly.
@@ -328,8 +335,8 @@ class RideTestCase(unittest.TestCase):
         response = self.client().post('/api/v1/ride/create',
                                       headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data_up)
         self.assertEqual(response.status_code, 201)
-        response = self.client().put('/api/v1/ride/1',
-                                     headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data_update)
+        response = self.client().put('/api/v1/ride/5',
+                                     headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data_update_2)
         #return message in json format
         result = json.loads(response.data.decode())
         #get a status code 201 and a success message
@@ -351,7 +358,7 @@ class RideTestCase(unittest.TestCase):
         response = self.client().post('/api/v1/ride/create',
                                       headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data_in)
         self.assertEqual(response.status_code, 201)
-        response = self.client().put('/api/v1/ride/30', headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data_update)
+        response = self.client().put('/api/v1/ride/18', headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data_update)
         #return message in json format
         result = json.loads(response.data.decode())
         #get a status code 204 and a success message
