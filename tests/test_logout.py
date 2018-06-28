@@ -25,14 +25,16 @@ class UserLogoutTestCase(unittest.TestCase):
         login_response = self.client().post('/api/v1/auth/login', data=self.user_data)
         self.assertEqual(login_response.status_code, 200)
         #Define header dictionary
-        access_token = json.loads(login_response.data.decode())['access_token'] 
-        logout_response = self.client().post('/api/v1/auth/logout', headers= dict(Authorization='Bearer ' + access_token), data=self.user_data)
+        access_token = json.loads(login_response.data.decode())['access_token']
+        logout_response = self.client().post('/api/v1/auth/logout',
+                                             headers=dict(Authorization='Bearer ' + access_token), data=self.user_data)
         #assert that the status code is equal to 200
         self.assertEqual(logout_response.status_code, 200)
         #return result in json format
         result = json.loads(logout_response.data.decode())
         #test that the response contains success message
         self.assertEqual(result["message"], "You have successfully logged out")
+
 
 if __name__ == '__main__':
     unittest.main()
