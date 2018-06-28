@@ -100,7 +100,7 @@ class ResetPasswordView(MethodView):
                 'message': 'You have successfully reset your password.'}
             return make_response(jsonify(response)), 200
         else:
-            response = {'message': 'Wrong password, or email'}
+            response = {'message': 'Wrong password or email'}
             return make_response(jsonify(response)), 401
 
 
