@@ -25,13 +25,12 @@ class UserLogoutTestCase(unittest.TestCase):
 
     def test_user_can_reset_password(self):
         """Test user can change there password given correct credentials."""
-        response = self.client().post('/api/v1/auth/signup', data=self.user_data)
-        self.assertEqual(response.status_code, 201)
+        self.client().post('/api/v1/auth/signup', data=self.user_data)
         login_response = self.client().post('/api/v1/auth/login', data=self.user_data)
-        self.assertEqual(login_response.status_code, 200)
         #Define header dictionary
         access_token = json.loads(login_response.data.decode())['access_token']
         reset_password = {
+            "user_email": "looky@example.com",
             "old_password": "testexample",
             "new_password": "123456"
         }
@@ -48,13 +47,13 @@ class UserLogoutTestCase(unittest.TestCase):
 
     def test_user_cannot_reset_password_with_invalid_credential(self):
         """Test user cannot change there password given incorrect credentials."""
-        response = self.client().post('/api/v1/auth/signup', data=self.user_data_2)
-        self.assertEqual(response.status_code, 201)
+        self.client().post('/api/v1/auth/signup', data=self.user_data_2)
         login_response = self.client().post('/api/v1/auth/login', data=self.user_data_2)
         self.assertEqual(login_response.status_code, 200)
         #Define header dictionary
         access_token = json.loads(login_response.data.decode())['access_token']
         reset_password = {
+            "user_email": "example@example.com",
             "old_password": "exampletest",
             "new_password": "123456"
         }
@@ -66,7 +65,7 @@ class UserLogoutTestCase(unittest.TestCase):
         result = json.loads(reset_response.data.decode())
         #test that the response contains a message
         self.assertEqual(result["message"],
-                         "Wrong password or username")
+                         "Wrong password or email")
 
 
 if __name__ == '__main__':

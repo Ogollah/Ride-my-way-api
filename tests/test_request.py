@@ -51,16 +51,13 @@ class RequestTestCase(unittest.TestCase):
         """
             Test that user can request a single ride offer using its id.
         """
-        response = self.client().post('/api/v1/auth/signup', data=self.user_data_sign)
-        self.assertEqual(response.status_code, 201)
+        self.client().post('/api/v1/auth/signup', data=self.user_data_sign)
         login_response = self.client().post('/api/v1/auth/login', data=self.user_data_sign)
-        self.assertEqual(login_response.status_code, 200)
         #Define header dictionary
         access_token = json.loads(login_response.data.decode())['access_token']
         #create a new ride
         response = self.client().post('/api/v1/ride/create',
                                       headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data_2)
-        self.assertEqual(response.status_code, 201)
         #get a ride using its id
         response = self.client().post('/api/v1/ride/1/request',
                                        headers=dict(Authorization='Bearer ' + access_token))
@@ -75,15 +72,12 @@ class RequestTestCase(unittest.TestCase):
         """
             Test user cannot request for a ride offer which is not available.
         """
-        response = self.client().post('/api/v1/auth/signup', data=self.user_data_2)
-        self.assertEqual(response.status_code, 201)
+        self.client().post('/api/v1/auth/signup', data=self.user_data_2)
         login_response = self.client().post('/api/v1/auth/login', data=self.user_data_2)
-        self.assertEqual(login_response.status_code, 200)
         #Define header dictionary
         access_token = json.loads(login_response.data.decode())['access_token']
         #create a new ride
         response = self.client().post('/api/v1/ride/create', headers=dict(Authorization='Bearer ' + access_token), data=self.ride_data_re)
-        self.assertEqual(response.status_code, 201)
         response = self.client().post(
             '/api/v1/ride/7/request', headers=dict(Authorization='Bearer ' + access_token))
         #return message in json format
