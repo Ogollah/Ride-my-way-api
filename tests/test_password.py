@@ -30,6 +30,7 @@ class UserLogoutTestCase(unittest.TestCase):
         #Define header dictionary
         access_token = json.loads(login_response.data.decode())['access_token']
         reset_password = {
+            "user_email": "looky@example.com",
             "old_password": "testexample",
             "new_password": "123456"
         }
@@ -52,6 +53,7 @@ class UserLogoutTestCase(unittest.TestCase):
         #Define header dictionary
         access_token = json.loads(login_response.data.decode())['access_token']
         reset_password = {
+            "user_email": "example@example.com",
             "old_password": "exampletest",
             "new_password": "123456"
         }
@@ -63,7 +65,7 @@ class UserLogoutTestCase(unittest.TestCase):
         result = json.loads(reset_response.data.decode())
         #test that the response contains a message
         self.assertEqual(result["message"],
-                         "Wrong password or username")
+                         "Wrong password or email")
 
 
 if __name__ == '__main__':
