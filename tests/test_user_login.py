@@ -33,7 +33,6 @@ class AuthTestCase(unittest.TestCase):
     def test_user_login(self):
         """Test signed up user can login."""
         response = self.client().post('/api/v1/auth/signup', data=self.user_data_log)
-        self.assertEqual(response.status_code, 201)
         login_response = self.client().post('/api/v1/auth/login', data=self.user_data_log)
         #assert that the status code is equal to 200
         self.assertEqual(login_response.status_code, 200)
@@ -47,7 +46,6 @@ class AuthTestCase(unittest.TestCase):
     def test_non_registered_user_login(self):
         """Test non registered users cannot login."""
         response = self.client().post('/api/v1/auth/signup', data=self.user_data)
-        self.assertEqual(response.status_code, 201)
         # define a dictionary to represent an unregistered user
 
         #try to login with un registered user

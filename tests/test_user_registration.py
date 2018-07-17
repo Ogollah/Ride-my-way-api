@@ -48,11 +48,10 @@ class AuthTestCase(unittest.TestCase):
     def test_already_signedup_user(self):
         """Test for dublicate signup."""
         response = self.client().post('/api/v1/auth/signup', data=self.user_data_2)
-        self.assertEqual(response.status_code, 201)
-        second_response = self.client().post('/api/v1/auth/signup', data=self.user_data_2)
-        self.assertEqual(second_response.status_code, 409)
+        response = self.client().post('/api/v1/auth/signup', data=self.user_data_2)
+        self.assertEqual(response.status_code, 409)
         # return result in json format
-        result = json.loads(second_response.data.decode())
+        result = json.loads(response.data.decode())
         self.assertEqual(
             result["message"], "The email address has been used try another one.")
 

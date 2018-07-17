@@ -16,8 +16,8 @@ Ride-my App is a carpooling application that provides drivers with the ability t
 |/api/v1/ride/<ride_id>                              |update a ride offer         |PUT 
 |/api/v1/ride/<ride_id>/request                      |Request a ride offer        |POST
 |/api/v1/<user_id>/ride/<ride_id>/requests           |Fetch all request           |GET
-|/api/v1/<user_id>/ride/requests/<request_id>        |Fetch a single ride offer   |GET
-|/api/v1/<user_id>/ride/requests/<request_id>/respond|Respond to ride request     |POST
+|/api/v1/<user_id>/ride/requests/<request_id>        |Fetch a single request      |GET
+|/api/v1/<user_id>/ride/requests/<request_id>/respond|Respond request             |POST
 
 
 ### Quick Start
